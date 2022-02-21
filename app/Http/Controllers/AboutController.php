@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 class AboutController
 {
-    public function team() {
-        return view('a-propos', [
-            'name' => 'A propos',
-            'devteam' => ['toto', 'tete', 'toea'],
+    public function index()
+    {
+        $name = 'A propos';
+
+        return view('about', [
+            'name' => $name,
+            'team' => ['Fiorella', 'Marina', 'Matthieu'],
         ]);
     }
 
-    public function nameUser($user) {
+    public function show($user)
+    {
         return view('about-show', [
             'user' => $user,
         ]);
     }
-
-
 }
