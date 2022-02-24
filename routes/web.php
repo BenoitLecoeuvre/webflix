@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PolitesseController;
 use App\Models\Category;
 use App\Models\Movie;
@@ -34,17 +35,18 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::get('/categories/creer', [CategoryController::class, 'create']);
 // Traite le formulaire
 Route::post('/categories/creer', [CategoryController::class, 'store']);
-
 Route::get('/categories/{category}', [CategoryController::class, 'show']);
+Route::get('/categories/{category}/modifier', [CategoryController::class, 'edit']);
+Route::put('/categories/{category}', [CategoryController::class, 'update']);
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
 
+// Route::get('/films', [MovieController::class, 'index']);
+// Route::get('/films/{movie}', [MovieController::class, 'show']);
 
-
-
-
-
-
-
-
+Route::controller(MovieController::class)->group(function () {
+    Route::get('/films', 'index');
+    Route::get('/films/{movie}', 'show');
+});
 
 Route::get('/exercice/categories', function () {
     return view('exercice.categories', [
