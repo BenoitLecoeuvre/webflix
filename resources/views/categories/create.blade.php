@@ -1,6 +1,8 @@
 @extends('layouts.base')
 
 @section('content')
+ <a href="/categories">Retour aux catégories</a>
+ <h1>Créer une catégorie</h1>
 
 @if ($errors->any())
     <div class="alert alert-danger">

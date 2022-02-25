@@ -20,30 +20,35 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(10)->create();
 
         // On va faire un appel sur l'API de The Movie DB
-        // Pour la catégorie
         $response = Http::get('https://api.themoviedb.org/3/genre/movie/list?api_key=ebc0a4ad59da5f80113ec7d1142c72a7&language=fr');
         $genres = $response->json()['genres'];
 
         foreach ($genres as $genre) {
-            Category::factory()->create(['name' => $genre['name']]);
+            Category::factory()->create([
+                'id' => $genre['id'],
+                'name' => $genre['name'],
+            ]);
         }
 
-        // Pour les films
+        // Category::factory(30)->create();
 
         $response = Http::get('https://api.themoviedb.org/3/movie/popular?api_key=ebc0a4ad59da5f80113ec7d1142c72a7&language=fr');
         $movies = $response->json()['results'];
 
         foreach ($movies as $movie) {
+            $movieSupp = Http::get('https://api.themoviedb.org/3/movie/'.$movie['id'].'?api_key=ebc0a4ad59da5f80113ec7d1142c72a7&language=fr-FR&append_to_response=credits,videos')->json();
+
             Movie::factory()->create([
                 'title' => $movie['title'],
                 'synopsys' => $movie['overview'],
                 'released_at' => $movie['release_date'],
-                'cover' => 'https://image.tmdb.org/t/p/w500/'.$movie['poster_path'],
+                'youtube' => $movieSupp['videos']['results'][0]['key'] ?? null,
+                'cover' => 'https://image.tmdb.org/t/p/w500'.$movie['poster_path'],
+                'category_id' => $movie['genre_ids'][0],
+                // https://image.tmdb.org/t/p/w500/1234.jpg
             ]);
         }
 
-
-        Category::factory(30)->create();
         Movie::factory(30)->create();
     }
 }

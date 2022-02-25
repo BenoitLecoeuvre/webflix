@@ -10,4 +10,10 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    // TODO: Définir le hasMany
+    public function movies()
+    {
+        return $this->hasMany(Movie::class);
+    }
 }

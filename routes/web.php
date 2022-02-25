@@ -45,6 +45,8 @@ Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
 
 Route::controller(MovieController::class)->group(function () {
     Route::get('/films', 'index');
+    Route::get('/films/creer', 'create');
+    Route::post('/films/creer', 'store');
     Route::get('/films/{movie}', 'show');
 });
 

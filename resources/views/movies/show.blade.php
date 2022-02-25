@@ -13,6 +13,12 @@
                 <div class="mb-4">
                     {{ $movie->synopsys }}
                 </div>
+
+                @if ($movie->youtube)
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/{{ $movie->youtube }}?rel=0" title="{{ $movie->title }}" allowfullscreen></iframe>
+                    </div>
+                @endif
             </div>
         </div>
     </div>
